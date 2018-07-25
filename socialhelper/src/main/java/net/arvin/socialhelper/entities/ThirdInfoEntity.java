@@ -22,6 +22,10 @@ public final class ThirdInfoEntity {
      * 用户唯一标识
      */
     private String openId;
+    /**
+     * 三方平台的 Token
+     * */
+    private String accessToken;
 
     private String nickname;
     private String sex;
@@ -36,30 +40,31 @@ public final class ThirdInfoEntity {
     private WXInfoEntity wxInfo;
     private WBInfoEntity wbInfo;
 
-    private ThirdInfoEntity(String unionId, String openId, String nickname, String sex, String avatar) {
+    private ThirdInfoEntity(String unionId, String openId, String accessToken, String nickname, String sex, String avatar) {
         this.unionId = unionId;
         this.openId = openId;
+        this.accessToken = accessToken;
         this.nickname = nickname;
         this.sex = sex;
         this.avatar = avatar;
     }
 
-    public static ThirdInfoEntity createQQThirdInfo(String unionId, String openId, String nickname, String sex, String avatar, QQInfoEntity qqInfo) {
-        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, nickname, sex, avatar);
+    public static ThirdInfoEntity createQQThirdInfo(String unionId, String openId, String accessToken, String nickname, String sex, String avatar, QQInfoEntity qqInfo) {
+        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, accessToken, nickname, sex, avatar);
         thirdInfoEntity.setPlatform(PLATFORM_QQ);
         thirdInfoEntity.setQqInfo(qqInfo);
         return thirdInfoEntity;
     }
 
-    public static ThirdInfoEntity createWxThirdInfo(String unionId, String openId, String nickname, String sex, String avatar, WXInfoEntity wxInfo) {
-        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, nickname, sex, avatar);
+    public static ThirdInfoEntity createWxThirdInfo(String unionId, String openId, String accessToken, String nickname, String sex, String avatar, WXInfoEntity wxInfo) {
+        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, accessToken, nickname, sex, avatar);
         thirdInfoEntity.setPlatform(PLATFORM_WX);
         thirdInfoEntity.setWxInfo(wxInfo);
         return thirdInfoEntity;
     }
 
-    public static ThirdInfoEntity createWbThirdInfo(String unionId, String openId, String nickname, String sex, String avatar, WBInfoEntity wbInfo) {
-        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, nickname, sex, avatar);
+    public static ThirdInfoEntity createWbThirdInfo(String unionId, String openId, String accessToken, String nickname, String sex, String avatar, WBInfoEntity wbInfo) {
+        ThirdInfoEntity thirdInfoEntity = new ThirdInfoEntity(unionId, openId, accessToken, nickname, sex, avatar);
         thirdInfoEntity.setPlatform(PLATFORM_WB);
         thirdInfoEntity.setWbInfo(wbInfo);
         return thirdInfoEntity;
@@ -137,11 +142,20 @@ public final class ThirdInfoEntity {
         this.wbInfo = wbInfo;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     @Override
     public String toString() {
         return "ThirdInfoEntity{" +
                 "unionId='" + unionId + '\'' +
                 ", openId='" + openId + '\'' +
+                ", accessToken='" + accessToken + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", sex='" + sex + '\'' +
                 ", avatar='" + avatar + '\'' +

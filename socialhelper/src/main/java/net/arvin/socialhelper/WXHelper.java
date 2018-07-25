@@ -58,6 +58,7 @@ final class WXHelper implements ISocial {
 
     private SocialShareCallback shareCallback;
     private BroadcastReceiver wxShareReceiver;
+    private WXLoginResultEntity wxLoginResult;
 
     WXHelper(Activity activity, String appId, String appSecret) {
         this.activity = activity;
@@ -124,7 +125,7 @@ final class WXHelper implements ISocial {
                 try {
                     URL url = new URL("https://api.weixin.qq.com/sns/oauth2/access_token?" +
                             "appid=" + appId + "&secret=" + appSecret + "&code=" + code + "&grant_type=authorization_code");
-                    WXLoginResultEntity wxLoginResult = new Gson().fromJson(SocialUtil.get(url), WXLoginResultEntity.class);
+                    wxLoginResult = new Gson().fromJson(SocialUtil.get(url), WXLoginResultEntity.class);
                     getUserInfo(wxLoginResult);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -172,7 +173,7 @@ final class WXHelper implements ISocial {
 
     @Override
     public ThirdInfoEntity createThirdInfo() {
-        return ThirdInfoEntity.createWxThirdInfo(wxInfo.getUnionid(), wxInfo.getOpenid(), wxInfo.getNickname(),
+        return ThirdInfoEntity.createWxThirdInfo(wxInfo.getUnionid(), wxInfo.getOpenid(), wxLoginResult.getAccess_token(), wxInfo.getNickname(),
                 SocialUtil.getWXSex(String.valueOf(wxInfo.getSex())), wxInfo.getHeadimgurl(), wxInfo);
     }
 

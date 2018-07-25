@@ -136,7 +136,7 @@ final class QQHelper implements ISocial {
 
     @Override
     public ThirdInfoEntity createThirdInfo() {
-        return ThirdInfoEntity.createQQThirdInfo(loginResult.getPfkey(), tencent.getOpenId(), qqInfo.getNickname(),
+        return ThirdInfoEntity.createQQThirdInfo(loginResult.getPfkey(), tencent.getOpenId(), loginResult.getAccess_token(), qqInfo.getNickname(),
                 SocialUtil.getQQSex(qqInfo.getGender()), qqInfo.getFigureurl_qq_2(), qqInfo);
     }
 

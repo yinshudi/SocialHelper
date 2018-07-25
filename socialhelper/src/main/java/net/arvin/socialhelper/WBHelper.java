@@ -65,6 +65,7 @@ final class WBHelper implements ISocial {
     private WbShareHandler shareHandler;
     private SocialShareCallback shareCallback;
     private WbShareCallback wbShareCallback;
+    private Oauth2AccessToken weiboAuthResult;
 
     WBHelper(Activity activity, String appId, String redirectUrl) {
         this.activity = activity;
@@ -115,6 +116,7 @@ final class WBHelper implements ISocial {
         wbAuthCallback = new WbAuthListener() {
             @Override
             public void onSuccess(Oauth2AccessToken oauth2AccessToken) {
+                weiboAuthResult = oauth2AccessToken;
                 if (oauth2AccessToken.isSessionValid()) {
                     AccessTokenKeeper.writeAccessToken(activity, oauth2AccessToken);
                     getUserInfo(oauth2AccessToken);
@@ -186,7 +188,7 @@ final class WBHelper implements ISocial {
 
     @Override
     public ThirdInfoEntity createThirdInfo() {
-        return ThirdInfoEntity.createWbThirdInfo(appId, wbInfo.getIdstr(), wbInfo.getScreen_name(),
+        return ThirdInfoEntity.createWbThirdInfo(appId, wbInfo.getIdstr(), weiboAuthResult.getToken(), wbInfo.getScreen_name(),
                 SocialUtil.getWBSex(wbInfo.getGender()), wbInfo.getAvatar_large(), wbInfo);
     }
 
